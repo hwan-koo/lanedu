@@ -5,14 +5,19 @@ server:
 
 spring:
   profiles: default
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: http://localhost:8090/.well-known/jwks.json
   cloud:
     gateway:
+#<<< API Gateway / Routes
       routes:
+        - id: class
+          uri: http://localhost:8082
+          predicates:
+            - Path=, 
+        - id: frontend
+          uri: http://localhost:8080
+          predicates:
+            - Path=/**
+#>>> API Gateway / Routes
       globalcors:
         corsConfigurations:
           '[/**]':
@@ -29,14 +34,17 @@ spring:
 
 spring:
   profiles: docker
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: http://oauth:8080/.well-known/jwks.json
   cloud:
     gateway:
       routes:
+        - id: class
+          uri: http://class:8080
+          predicates:
+            - Path=, 
+        - id: frontend
+          uri: http://frontend:8080
+          predicates:
+            - Path=/**
       globalcors:
         corsConfigurations:
           '[/**]':

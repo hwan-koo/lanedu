@@ -30,19 +30,11 @@
 		        ></span> 
                 <v-spacer></v-spacer>
 
-                <b style="margin-left:10px">{{username}} 님</b>
-                <v-btn
-                    text
-                    color="white"
-                    style="font-size:10px"
-                    @click="logout()"
-                >
-                    Logout
-                </v-btn>
             </v-app-bar>
 
             <v-navigation-drawer app clipped flat v-model="sideBar">
                 <v-list>
+
                 </v-list>
             </v-navigation-drawer>
         </div>
@@ -123,19 +115,12 @@ export default {
         aggregate: [
             
         ],
-        username: '',
     }),
     
     async created() {
       var path = document.location.href.split("#/")
       this.urlPath = path[1];
 
-      var me = this
-      me.username = me.$OAuth.idTokenParsed.preferred_username
-
-      if(!me.username){
-          location.reload()
-      }
     },
     watch: {
         cards(newCards) {
@@ -165,15 +150,6 @@ export default {
         },
         unflipCard(index) {
             this.$set(this.flipped, index, false);
-        },
-        logout(){
-            //const keycloak = new Keycloak();
-
-            //keycloak.logout;
-            if(confirm("로그아웃 하시겠습니까?")){
-                localStorage.clear()
-                location.href = 'http://localhost:9090/realms/master/protocol/openid-connect/logout'
-            }
         },
     }
 };
