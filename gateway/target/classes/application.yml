@@ -9,6 +9,10 @@ spring:
     gateway:
 #<<< API Gateway / Routes
       routes:
+        - id: class
+          uri: http://localhost:8082
+          predicates:
+            - Path=, 
         - id: frontend
           uri: http://localhost:8080
           predicates:
@@ -33,6 +37,10 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: class
+          uri: http://class:8080
+          predicates:
+            - Path=, 
         - id: frontend
           uri: http://frontend:8080
           predicates:
